@@ -2,6 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using SacramentMeetingPlanner.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<MeetingPlanContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("MeetingPlanContext") ?? throw new InvalidOperationException("Connection string 'MeetingPlanContext' not found.")));
+builder.Services.AddDbContext<SpeakersContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SpeakersContext") ?? throw new InvalidOperationException("Connection string 'SpeakersContext' not found.")));
 builder.Services.AddDbContext<HymnsContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("HymnsContext") ?? throw new InvalidOperationException("Connection string 'HymnsContext' not found.")));
 
