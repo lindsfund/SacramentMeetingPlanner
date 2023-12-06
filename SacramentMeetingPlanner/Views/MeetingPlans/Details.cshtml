@@ -82,3 +82,7 @@
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+<!-- Generate PDF form -->
+<form asp-action="GeneratePdf" asp-route-id="@Model?.Id" method="post" target="_blank">
+    <button type="submit">Generate PDF</button>
+</form>

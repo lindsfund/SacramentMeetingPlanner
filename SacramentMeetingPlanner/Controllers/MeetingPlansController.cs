@@ -1,12 +1,16 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using SacramentMeetingPlanner.Data;
 using SacramentMeetingPlanner.Models;
+
 
 namespace SacramentMeetingPlanner.Controllers
 {
@@ -14,15 +18,61 @@ namespace SacramentMeetingPlanner.Controllers
     {
         private readonly MeetingPlanContext _context;
 
-        public MeetingPlansController(MeetingPlanContext context)
+        //injecting PdfGenerator
+        private readonly PdfGenerator _pdfGenerator;
+        private readonly ICompositeViewEngine _compositeViewEngine;
+
+        public MeetingPlansController(MeetingPlanContext context, PdfGenerator pdfGenerator, ICompositeViewEngine compositeViewEngine)
         {
             _context = context;
+            _pdfGenerator = pdfGenerator;
+            _compositeViewEngine = compositeViewEngine; 
         }
 
         // GET: MeetingPlans
         public async Task<IActionResult> Index()
         {
             return View(await _context.MeetingPlan.ToListAsync());
+        }
+
+
+        // Action for PDF generation
+        public async Task<IActionResult> GeneratePdf(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var meetingPlan = await _context.MeetingPlan.FindAsync(id);
+            if (meetingPlan == null)
+            {
+                return NotFound();
+            }
+
+            var htmlContent = this.RenderViewToString("Details", meetingPlan);
+            var pdfBytes = _pdfGenerator.GeneratePdf(htmlContent);
+
+            return File(pdfBytes, "application/pdf", "MeetingPlan.pdf");
+        }
+
+        private string RenderViewToString(string viewName, object model)
+        {
+            ViewData.Model = model;
+            using (var sw = new StringWriter())
+            {
+                var viewResult = _compositeViewEngine.FindView(ControllerContext, viewName, false);
+
+                if (viewResult.View != null)
+                {
+                    var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw, new Microsoft.AspNetCore.Mvc.ViewFeatures.HtmlHelperOptions());
+
+                    // Use the asynchronous version of RenderAsync
+                    viewResult.View.RenderAsync(viewContext).GetAwaiter().GetResult();
+                }
+
+                return sw.GetStringBuilder().ToString();
+            }
         }
 
         // GET: MeetingPlans/Details/5
