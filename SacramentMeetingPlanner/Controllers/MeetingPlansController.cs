@@ -22,7 +22,6 @@ namespace SacramentMeetingPlanner.Controllers
         // GET: MeetingPlans
         public async Task<IActionResult> Index()
         {
-            
             return View(await _context.MeetingPlan.ToListAsync());
         }
 
