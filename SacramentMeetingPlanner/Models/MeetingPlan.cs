@@ -7,7 +7,7 @@ namespace SacramentMeetingPlanner.Models
         public int Id { get; set; }
         [Required]
         [Display(Name = "Meeting Date")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
         public DateTime MeetingDate { get; set; }
         
         [Display(Name = "Conducting")]
