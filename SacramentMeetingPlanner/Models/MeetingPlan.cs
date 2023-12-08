@@ -35,7 +35,7 @@ namespace SacramentMeetingPlanner.Models
 
         [StringLength(100)]
         [Display(Name = "Speaker - Topic")]
-        public string? Speaker {  get; set; }
+        public List<string> Speaker { get; set; } 
 
         [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
         [Display(Name = "Musical Number (optional)")]

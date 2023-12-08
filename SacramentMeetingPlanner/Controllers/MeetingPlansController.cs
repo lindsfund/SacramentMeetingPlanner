@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SacramentMeetingPlanner.Data;
 using SacramentMeetingPlanner.Models;
 
@@ -22,6 +23,7 @@ namespace SacramentMeetingPlanner.Controllers
         // GET: MeetingPlans
         public async Task<IActionResult> Index()
         {
+            
             return View(await _context.MeetingPlan.ToListAsync());
         }
 
@@ -52,6 +54,13 @@ namespace SacramentMeetingPlanner.Controllers
         // POST: MeetingPlans/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        public IActionResult AddSpeaker()
+        {
+            return PartialView("_TextInputPartial");
+        }
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,MeetingDate,ConductingLeader,PresidingLeader,OpeningHymn,OpeningPrayer,Buisness,SacramentHymn,Speaker,MusicalNumber,ClosingHymn,ClosingPrayer")] MeetingPlan meetingPlan)
