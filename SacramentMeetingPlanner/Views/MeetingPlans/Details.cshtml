@@ -52,12 +52,25 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.SacramentHymn)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Speaker)
+        <!--
+            <dt class="col-sm-2">
+        Html.DisplayNameFor(model => model.Speakers)
+                </dt>
+                <dd class="col-sm-10">
+        Html.DisplayFor(model => model.Speakers)
+                </dd>
+        -->
+        @foreach (var speaker in ((List<Speaker>)ViewData["Speakers"]))
+        {
+        <dt class="col-sm-2">
+                    Speaker-Name - Topic
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Speaker)
-        </dd>
+        <dd class="col-sm-10">
+                    @speaker.Name - @speaker.Topic
+        </dd>                        
+        }
+           
+
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.MusicalNumber)
         </dt>
@@ -79,6 +92,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.MeetingPlanId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

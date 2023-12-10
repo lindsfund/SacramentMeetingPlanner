@@ -24,11 +24,11 @@ namespace SacramentMeetingPlanner.Migrations
 
             modelBuilder.Entity("SacramentMeetingPlanner.Models.MeetingPlan", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("MeetingId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MeetingId"));
 
                     b.Property<string>("Buisness")
                         .HasColumnType("nvarchar(max)");
@@ -60,10 +60,7 @@ namespace SacramentMeetingPlanner.Migrations
                     b.Property<string>("SacramentHymn")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Speaker")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
+                    b.HasKey("MeetingId");
 
                     b.ToTable("MeetingPlan");
                 });

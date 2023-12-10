@@ -47,14 +47,31 @@
                 <input asp-for="SacramentHymn" class="form-control" />
                 <span asp-validation-for="SacramentHymn" class="text-danger"></span>
             </div>
+            <!--
             <div class="form-group">
                 <label asp-for="Speaker" class="control-label"></label>
                 <input asp-for="Speaker" class="form-control" />
-                <span asp-validation-for="Speaker" class="text-danger"></span>
+                <span asp-validation-for="Speakers" class="text-danger"></span>
             </div>
+            -->
             <div>
                 <input type = "button" onclick = "addSpeaker()" value="Add Speaker" class="btn btn-link"/>
             </div>
+            <div>
+                <ul>
+                    @foreach (var speaker in ((List<Speaker>)ViewData["Speakers"]))
+                        {
+                            <li>
+                                <label for="@speaker.Name;">
+                                <input type="checkbox" name="selectedSpeakers" value="@speaker.Name - @speaker.Topic" id="@speaker.SpeakerId;" />
+                                    @speaker.Name - @speaker.Topic
+                                </label>
+                            </li>
+                        }
+                    
+                </ul>
+            </div>
+
             <div class="form-group">
                 <label asp-for="MusicalNumber" class="control-label"></label>
                 <input asp-for="MusicalNumber" class="form-control" />

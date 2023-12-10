@@ -14,14 +14,14 @@ namespace SacramentMeetingPlanner.Migrations.Speakers
                 name: "Speaker",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    SpeakerId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Topic = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Speaker", x => x.Id);
+                    table.PrimaryKey("PK_Speaker", x => x.SpeakerId);
                 });
         }
 

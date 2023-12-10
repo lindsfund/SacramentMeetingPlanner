@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SacramentMeetingPlanner.Data;
 using SacramentMeetingPlanner.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SacramentMeetingPlanner.Controllers
 {
@@ -24,6 +26,7 @@ namespace SacramentMeetingPlanner.Controllers
         public async Task<IActionResult> Index()
         {
             
+            ViewData["Speakers"] = _context.Set<Speaker>().ToList();
             return View(await _context.MeetingPlan.ToListAsync());
         }
 
@@ -36,18 +39,20 @@ namespace SacramentMeetingPlanner.Controllers
             }
 
             var meetingPlan = await _context.MeetingPlan
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.MeetingPlanId == id);
             if (meetingPlan == null)
             {
                 return NotFound();
             }
 
+            ViewData["Speakers"] = _context.Set<Speaker>().ToList();
             return View(meetingPlan);
         }
 
         // GET: MeetingPlans/Create
         public IActionResult Create()
         {
+            ViewData["Speakers"] = _context.Set<Speaker>().ToList();
             return View();
         }
 
@@ -57,6 +62,7 @@ namespace SacramentMeetingPlanner.Controllers
         [HttpPost]
         public IActionResult AddSpeaker()
         {
+            ViewData["Speakers"] = _context.Set<Speaker>().ToList();
             return PartialView("_TextInputPartial");
         }
 
@@ -71,6 +77,7 @@ namespace SacramentMeetingPlanner.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Speakers"] = _context.Set<Speaker>().ToList();
             return View(meetingPlan);
         }
 
@@ -87,6 +94,7 @@ namespace SacramentMeetingPlanner.Controllers
             {
                 return NotFound();
             }
+            ViewData["Speakers"] = _context.Set<Speaker>().ToList();
             return View(meetingPlan);
         }
 
@@ -96,8 +104,51 @@ namespace SacramentMeetingPlanner.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,MeetingDate,ConductingLeader,PresidingLeader,OpeningHymn,OpeningPrayer,Buisness,SacramentHymn,Speaker,MusicalNumber,ClosingHymn,ClosingPrayer")] MeetingPlan meetingPlan)
+ 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         {
-            if (id != meetingPlan.Id)
+            if (id != meetingPlan.MeetingPlanId)
             {
                 return NotFound();
             }
@@ -111,7 +162,7 @@ namespace SacramentMeetingPlanner.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MeetingPlanExists(meetingPlan.Id))
+                    if (!MeetingPlanExists(meetingPlan.MeetingPlanId))
                     {
                         return NotFound();
                     }
@@ -122,6 +173,7 @@ namespace SacramentMeetingPlanner.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Speakers"] = _context.Set<Speaker>().ToList();
             return View(meetingPlan);
         }
 
@@ -134,12 +186,13 @@ namespace SacramentMeetingPlanner.Controllers
             }
 
             var meetingPlan = await _context.MeetingPlan
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.MeetingPlanId == id);
             if (meetingPlan == null)
             {
                 return NotFound();
             }
 
+            ViewData["Speakers"] = _context.Set<Speaker>().ToList();
             return View(meetingPlan);
         }
 
@@ -160,7 +213,7 @@ namespace SacramentMeetingPlanner.Controllers
 
         private bool MeetingPlanExists(int id)
         {
-            return _context.MeetingPlan.Any(e => e.Id == id);
+            return _context.MeetingPlan.Any(e => e.MeetingPlanId == id);
         }
     }
 }

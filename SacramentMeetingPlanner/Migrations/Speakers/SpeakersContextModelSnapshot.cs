@@ -23,11 +23,11 @@ namespace SacramentMeetingPlanner.Migrations.Speakers
 
             modelBuilder.Entity("SacramentMeetingPlanner.Models.Speaker", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("SpeakerId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SpeakerId"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -37,7 +37,7 @@ namespace SacramentMeetingPlanner.Migrations.Speakers
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("SpeakerId");
 
                     b.ToTable("Speaker");
                 });

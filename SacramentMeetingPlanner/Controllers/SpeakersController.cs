@@ -34,7 +34,7 @@ namespace SacramentMeetingPlanner.Controllers
             }
 
             var speaker = await _context.Speaker
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.SpeakerId == id);
             if (speaker == null)
             {
                 return NotFound();
@@ -86,9 +86,9 @@ namespace SacramentMeetingPlanner.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Topic")] Speaker speaker)
+        public async Task<IActionResult> Edit(int id, [Bind("SpeakerId,Name,Topic")] Speaker speaker)
         {
-            if (id != speaker.Id)
+            if (id != speaker.SpeakerId)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace SacramentMeetingPlanner.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SpeakerExists(speaker.Id))
+                    if (!SpeakerExists(speaker.SpeakerId))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace SacramentMeetingPlanner.Controllers
             }
 
             var speaker = await _context.Speaker
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.SpeakerId == id);
             if (speaker == null)
             {
                 return NotFound();
@@ -151,7 +151,7 @@ namespace SacramentMeetingPlanner.Controllers
 
         private bool SpeakerExists(int id)
         {
-            return _context.Speaker.Any(e => e.Id == id);
+            return _context.Speaker.Any(e => e.SpeakerId == id);
         }
     }
 }

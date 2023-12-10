@@ -12,7 +12,7 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="MeetingPlanId" />
             <div class="form-group">
                 <label asp-for="MeetingDate" class="control-label"></label>
                 <input asp-for="MeetingDate" class="form-control" />
@@ -49,9 +49,19 @@
                 <span asp-validation-for="SacramentHymn" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Speaker" class="control-label"></label>
-                <input asp-for="Speaker" class="form-control" />
-                <span asp-validation-for="Speaker" class="text-danger"></span>
+                <label asp-for="Speakers" class="control-label"></label>
+                <input asp-for="Speakers" class="form-control" />
+                <span asp-validation-for="Speakers" class="text-danger"></span>
+                @foreach (var speaker in ((List<Speaker>) ViewData["Speakers"]) )
+                {
+                    <li>
+                        <label for="@speaker.Name;">
+                            <input type="checkbox" name="selectedSpeakers" value="@speaker.Name - @speaker.Topic" id="@speaker.SpeakerId;" />
+                            @speaker.Name - @speaker.Topic
+                        </label>
+                    </li>
+                }
+
             </div>
             <div class="form-group">
                 <label asp-for="MusicalNumber" class="control-label"></label>

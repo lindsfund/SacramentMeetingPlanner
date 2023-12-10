@@ -1,10 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Composition;
+using System.Text.Json.Serialization;
 
 namespace SacramentMeetingPlanner.Models
 {
     public class MeetingPlan
     {
-        public int Id { get; set; }
+        public int MeetingPlanId { get; set; }
+
         [Required]
         [Display(Name = "Meeting Date")]
         [DataType(DataType.DateTime)]
@@ -26,16 +30,21 @@ namespace SacramentMeetingPlanner.Models
         [Display(Name = "Opening Prayer")]
         public string? OpeningPrayer { get; set; }
 
-        [Display(Name = "Stake/Ward/Branch Business")]
+        [Display(Name = "Stake / Ward / Branch Business")]
         public string? Buisness { get; set; }
 
         [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
         [Display(Name = "Sacrament Hymn (Title - number)")]
         public string? SacramentHymn { get; set; }
 
-        [StringLength(100)]
         [Display(Name = "Speaker - Topic")]
-        public List<string> Speaker { get; set; } 
+        // [ManyToMany("Speakers")]
+        // [JoinTable("MeetingPlanSpeaker", "MeetingPlanId", "SpeakerId")]
+        // [InverseProperty("MeetingPlans")]
+        // public virtual ICollection<Speaker>? Speakers { get; set; }
+        // [ManyToMany(typeof(Speakers), "MeetingPlanSpeaker")]
+        // public virtual ICollection<MeetingPlanSpeaker>? Speakers { get; set; }
+        public ICollection<Speaker>? Speakers { get; set; } 
 
         [RegularExpression(@"^[A-Z]+[a-zA-Z0-9""'\s-]*$")]
         [Display(Name = "Musical Number (optional)")]

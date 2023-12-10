@@ -15,7 +15,7 @@ namespace SacramentMeetingPlanner.Migrations
                 name: "MeetingPlan",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    MeetingId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     MeetingDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ConductingLeader = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -31,7 +31,7 @@ namespace SacramentMeetingPlanner.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MeetingPlan", x => x.Id);
+                    table.PrimaryKey("PK_MeetingPlan", x => x.MeetingId);
                 });
         }
 
